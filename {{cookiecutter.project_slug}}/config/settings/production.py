@@ -12,7 +12,8 @@ Production Configurations
 - Use opbeat for error reporting
 {% endif %}
 """
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
 from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
@@ -270,10 +271,12 @@ LOGGING = {
         },
     },
 }
+SENTRY_ENVIRONMENT = env.int('DJANGO_SENTRY_ENVIRONMENT', logging.INFO)
 SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-    'DSN': SENTRY_DSN
+    'DSN': SENTRY_DSN,
+    'environment': SENTRY_ENVIRONMENT
 }
 {% elif cookiecutter.use_sentry_for_error_reporting == 'n' %}
 # LOGGING CONFIGURATION
